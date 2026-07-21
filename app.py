@@ -19,6 +19,7 @@ import numpy as np
 from streamlit_extras.colored_header import colored_header
 from streamlit_extras.metric_cards import style_metric_cards
 from streamlit_extras.stylable_container import stylable_container
+from zoneinfo import ZoneInfo
 import torch
 torch.serialization.add_safe_globals([torch.serialization.Storage])
 try:
@@ -80,7 +81,6 @@ st.markdown("""
             box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6);
         }
 
-        
         .stSelectbox, .stTextInput, .stRadio>div {
             background-color:#191970	 !important;
             color: #0f172a !important;
@@ -116,13 +116,39 @@ st.markdown("""
 
         /* Headings: Bright Neon Green and Cyan accents */
         h1 { 
-            color: #00ffcc !important; 
+            color: #00ffcc !important;
             text-shadow: 0 0 12px rgba(0, 255, 204, 0.3);
             font-weight: 800;
         }
         h2, h3, h4 { 
             color: #38bdf8 !important; 
             font-weight: 700;
+        }
+
+        .dark-warning-box {
+            background-color: rgba(255, 179, 0, 0.05) !important;
+            border: 1px solid rgba(255, 179, 0, 0.35) !important;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 15px 0 25px 0;
+        }
+        .dark-warning-title {
+            color: #ffcc00 !important;
+            font-size: 15px !important;
+            font-weight: 600 !important;
+            margin-bottom: 12px !important;
+        }
+        .dark-warning-list {
+            list-style: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .dark-warning-item {
+            color: #e2e8f0 !important;
+            font-size: 14px !important;
+            margin-bottom: 6px !important;
+            display: flex;
+            align-items: center;
         }
 </style>
 """, unsafe_allow_html=True)
@@ -159,6 +185,19 @@ with st.sidebar:
     status_col1, status_col2 = st.columns(2)
     status_col1.metric("Model", "YOLOv8", "Active")
     status_col2.metric("FPS", "30", "Live")
+    
+    st.markdown("---")
+    st.markdown("### About")
+    st.markdown("""
+    This AI surveillance system detects:
+    - No-SafetyVest
+    - No-HardHat
+    - No-Mask
+    - No-Gloves
+    - Machines
+    - Person   
+    - Items from Construction site        
+    """)
 
 def log_violation_memory(class_name, confidence):
     """Logs data to CSV safely without blocking video frames."""
@@ -245,6 +284,7 @@ def display_video(video_source):
 tab1, tab2 = st.tabs(["Live Monitoring", "Violation Logs"])
 
 with tab1:
+
     if source_type == 'Browser Webcam (Photo)':
         st.info("ℹ️ Captures single photos via your web browser interface.")
         captured_image = st.camera_input("Take a photo for PPE detection")
@@ -262,7 +302,9 @@ with tab1:
                 st.metric("Violations Detected", violation_count)
 
     elif source_type == 'Upload Video':
-        with stylable_container(key="upload_container", css_styles="{border: 1px solid rgba(49, 51, 63, 0.2); border-radius: 8px; padding: 20px;}"):
+        with stylable_container(
+            key="upload_container", 
+            css_styles="{border: 1px solid rgba(49, 51, 63, 0.2); border-radius: 8px; padding: 20px;}"):
             uploaded_file = st.file_uploader("Upload a video file", type=["mp4", "avi", "mov"])
             if uploaded_file:
                 temp_video_path = os.path.join(tempfile.gettempdir(), uploaded_file.name)
@@ -272,6 +314,15 @@ with tab1:
                 display_video(temp_video_path)
 
     elif source_type == 'OpenCV Webcam (Local Only)':
+        st.markdown("""<div class="dark-warning-box">
+            <div class="dark-warning-title">🌐 Webcam access is disabled in cloud deployments. Try these instead:</div>
+            <ul class="dark-warning-list">
+                <li class="dark-warning-item">➡️ &nbsp;<span style="font-size:16px;">📁</span>&nbsp; Upload a video file</li>
+                <li class="dark-warning-item">➡️ &nbsp;<span style="font-size:16px;">📡</span>&nbsp; Use RTSP stream</li>
+                <li class="dark-warning-item">➡️ &nbsp;<span style="font-size:16px;">💻</span>&nbsp; Run locally for webcam</li>
+            </ul>
+        </div> 
+    """, unsafe_allow_html=True)
         if os.environ.get('IS_STREAMLIT_CLOUD'):
             st.error("OpenCV local hardware hooks are inaccessible on cloud servers!")
         else:
@@ -340,3 +391,19 @@ with tab2:
             st.error(f"Error processing logs: {e}")
     else:
         st.info("ℹ️ No violations logged yet.")
+
+
+
+
+
+st.markdown("""<hr style="margin-top: 3rem; margin-bottom: 1rem;">""", unsafe_allow_html=True)
+st.markdown("""
+    <div style='text-align: center; font-size: 0.9em; color: grey; margin-bottom: 2rem;'>
+        👨‍💻 Developed by: Bhavya Shany  |  2501730024 |
+        <a href='https://github.com/BhavyaShany/VisionGuard-AI' target='_blank' style='color: grey; text-decoration: none;'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style='vertical-align: middle; margin-left: 4px;'>
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+        </a>
+    </div>
+""", unsafe_allow_html=True)
