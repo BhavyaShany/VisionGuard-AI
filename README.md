@@ -33,21 +33,48 @@ VisionGuard-AI is a computer vision application that detects whether workers are
 </p>
 
 ---
+## 🛠️ Technology Stack
+
+| Category | Technologies Used |
+|:---------|:------------------|
+| **Programming Language** | Python 3.11 |
+| **Framework** | Streamlit |
+| **Deep Learning Model** | Ultralytics YOLOv8 |
+| **Computer Vision** | OpenCV |
+| **Image Processing** | Pillow (PIL) |
+| **Numerical Computing** | NumPy |
+| **Object Detection** | YOLOv8 |
+| **Machine Learning** | PyTorch (via Ultralytics) |
+| **Model Format** | `.pt` (PyTorch Weights) |
+| **Dataset** | Custom PPE Detection Dataset |
+| **Development Environment** | Visual Studio Code |
+| **Package Manager** | pip |
+| **Version Control** | Git & GitHub |
+| **Deployment** | Streamlit |
+| **Operating System** | Windows 11 |
+
+---
 
 ## 📁 Project Structure
 
-```
+```text
 VisionGuard-AI/
 │
-├── app.py                 # Main Streamlit application
-├── models/                # Trained YOLO model
-├── utils/                 # Helper functions
-├── uploads/               # Uploaded media
-├── outputs/               # Detection results
-├── requirements.txt
-├── README.md
-└── LICENSE
+├── .vscode/
+│   └── settings.json              # VS Code workspace settings
+│
+├── dataset/
+│   ├── css-data/                  # PPE dataset
+│   ├── results_yolov8n_100e/      # Model training results
+│   └── source_files/              # Original dataset files
+│
+├── app.py                         # Main Streamlit application
+├── best.pt                        # Trained YOLO model weights
+├── requirements.txt               # Python dependencies
+├── runtime.txt                    # Runtime configuration
+└── README.md                      # Project documentation
 ```
+
 
 > 
 
@@ -101,7 +128,7 @@ The application will automatically open in your default web browser.
 - Image Upload
 - Video Upload
 - Webcam
-- RTSP Camera
+- RTSP CameraSetup
 - Local WebCam
 
 ---
