@@ -20,12 +20,17 @@ VisionGuard-AI is a computer vision application that detects whether workers are
 
 ## 🛠️ Tech Stack
 
-- Python
-- Streamlit
-- OpenCV
-- Ultralytics YOLO
-- NumPy
-- Pillow
+<p align="left">
+
+<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+<img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" />
+<img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white" />
+<img src="https://img.shields.io/badge/YOLO-111111?style=for-the-badge&logo=yolo&logoColor=white" />
+<img src="https://img.shields.io/badge/Ultralytics-00FFFF?style=for-the-badge&logoColor=black" />
+<img src="https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white" />
+<img src="https://img.shields.io/badge/Pillow-8A2BE2?style=for-the-badge&logoColor=white" />
+
+</p>
 
 ---
 
@@ -44,7 +49,7 @@ VisionGuard-AI/
 └── LICENSE
 ```
 
-> *Project structure may vary depending on your implementation.*
+> 
 
 ---
 
@@ -96,7 +101,8 @@ The application will automatically open in your default web browser.
 - Image Upload
 - Video Upload
 - Webcam
-- Live Camera Feed (if supported)
+- RTSP Camera
+- Local WebCam
 
 ---
 
@@ -111,7 +117,6 @@ The model can detect safety equipment such as:
 - 😷 Face Mask
 - 👷 Person
 
-*(Classes depend on the model used.)*
 
 ---
 
@@ -122,6 +127,8 @@ The model can detect safety equipment such as:
 3. Upload an image or video, or start the webcam.
 4. The model detects PPE items in real time.
 5. View detection results with confidence scores.
+6. The Violations get stored in separate log.
+7. You can download the Violations in a CSV file.
 
 ---
 
@@ -184,7 +191,7 @@ git push origin feature-name
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is for educational purpose only.
 
 ---
 
