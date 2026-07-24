@@ -201,9 +201,11 @@ with st.sidebar:
 
 def log_violation_memory(class_name, confidence):
     """Logs data to CSV safely without blocking video frames."""
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    entry = pd.DataFrame([[timestamp, class_name, round(confidence * 100, 2)]], 
-                        columns=["Timestamp", "Violation", "Confidence"])
+    timestamp = datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d %H:%M:%S")
+    entry = pd.DataFrame(
+        [[timestamp, class_name, round(confidence * 100, 2)]],
+        columns=["Timestamp", "Violation", "Confidence"]
+    )
     
     if not os.path.exists(LOG_FILE):
         entry.to_csv(LOG_FILE, index=False)
@@ -368,7 +370,7 @@ with tab2:
                     st.download_button(
                         label="📥 Download Full Log", 
                         data=csv_bytes, 
-                        file_name=f"violation_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv", 
+                        file_name=f"violation_report_{datetime.now(ZoneInfo('Asia/Kolkata')).strftime('%Y%m%d_%H%M%S')}.csv",
                         mime="text/csv",
                         key="download_btn_stable", # Unique explicit key prevents state loss
                         use_container_width=True
